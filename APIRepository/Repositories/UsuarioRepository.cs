@@ -21,34 +21,34 @@ namespace APIRepository.Repositories
             connectionstring = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=APICadastroAutenticação;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         }
 
-        
+
 
         #endregion
 
         public void Alterar(Usuario usuario)
         {
-            var query = "UPDATE CadastroUsuario Set  Nome=@Nome ,Senhar=@Senhar ,DataAlteracao=@DataAlteracao where Id=@Id";
+            var query = @"UPDATE CadastroUsuario Set  Nome = @Nome, Senhar = @Senhar, DataAlteracao = @DataAlteracao where Id= @Id";
 
             using (var connection = new SqlConnection(connectionstring))
             {
-                connection.Execute(query);
+                connection.Execute(query, usuario);
             }
-            
+
         }
 
-        public void Excluir(Guid usuarioId)
+        public void Excluir(Usuario usuario)
         {
             var query = "Delete From CadastroUsuario where Id=@Id";
 
-            using(var connection = new SqlConnection(connectionstring))
+            using (var connection = new SqlConnection(connectionstring))
             {
-                connection.Execute(query, new { usuarioId });
+                connection.Execute(query, usuario);
             }
         }
 
         public void Inserir(Usuario usuario)
         {
-            var query = "Insert into CadastroUsuario (Id,Nome,Email,Senhar,DataCadastro,DataAltercao)values(@Id,@Nome,@Email,@Senhar,@DataCadastro,@DataAlteracao)";
+            var query = "Insert into CadastroUsuario (Id,Nome,Email,Senhar,DataCadastro,DataAlteracao)values(@Id,@Nome,@Email,@Senhar,@DataCadastro,@DataAlteracao)";
 
             using (var connection = new SqlConnection(connectionstring))
             {
@@ -57,13 +57,24 @@ namespace APIRepository.Repositories
             }
         }
 
-        public List<Usuario> ObterPorEmail(string email)
+        public Usuario Login(string email, string senha)
         {
-            var query = "Select * From CadastroUsuario Where Email=@Email ORDER BY NOME";
+            var query = "Select * From CadastroUsuario Where Email=@email AND Senhar=@senha";
 
-            using(var connection = new SqlConnection(connectionstring))
+            using (var connection = new SqlConnection(connectionstring))
             {
-                return connection.Query<Usuario>(query, new { email }).ToList();
+                return connection.Query<Usuario>(query, new { email, senha }).FirstOrDefault();
+            }
+
+        }
+
+        public Usuario ObterPorEmail(string email)
+        {
+            var query = "Select * From CadastroUsuario Where Email=@email";
+
+            using (var connection = new SqlConnection(connectionstring))
+            {
+                return connection.Query<Usuario>(query, new { email }).FirstOrDefault();
             }
 
         }
@@ -75,16 +86,6 @@ namespace APIRepository.Repositories
             using (var connection = new SqlConnection(connectionstring))
             {
                 return connection.Query<Usuario>(query, new { Id }).FirstOrDefault();
-            }
-        }
-
-        public List<Usuario> ObterporNome(string nome)
-        {
-            var query = "Select * From CadastroUsuario Where Nome=@Nome ORDER BY NOME";
-
-            using (var connection = new SqlConnection(connectionstring))
-            {
-                return connection.Query<Usuario>(query, new { nome }).ToList();
             }
         }
 

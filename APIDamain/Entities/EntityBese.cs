@@ -17,6 +17,7 @@ namespace APIDomain.Entities
         {
             Id = Guid.NewGuid();
             DataCadastro = DateTime.Now;
+            DataAlteracao = DateTime.Now;
         }
         #endregion
     }

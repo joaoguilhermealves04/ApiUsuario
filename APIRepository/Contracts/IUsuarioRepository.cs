@@ -9,10 +9,10 @@ namespace APIRepository.Contracts
     {
         void Inserir(Usuario usuario);
         void Alterar(Usuario usuario);
-        void Excluir(Guid usuarioId);
+        void Excluir(Usuario usuario);
         List<Usuario> ObterTodos();
-        List<Usuario> ObterporNome(string nome);
-        List<Usuario> ObterPorEmail(string email);
         Usuario ObterporId(Guid Id);
+        Usuario Login(string email, string senha);
+        Usuario ObterPorEmail(string email);
     }
 }
