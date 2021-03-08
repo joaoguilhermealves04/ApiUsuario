@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace APIDamain.Entities
+namespace APIDomain.Entities
 {
     public class EntityBese
     {

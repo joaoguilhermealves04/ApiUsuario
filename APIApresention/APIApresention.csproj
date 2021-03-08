@@ -9,9 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\APIDamain\APIDamain.csproj" />
+    <ProjectReference Include="..\APIDamain\APIDomain.csproj" />
     <ProjectReference Include="..\APIRepository\APIRepository.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 
 </Project>

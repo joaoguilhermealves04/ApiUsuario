@@ -30,8 +30,7 @@ namespace APIApresention
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            #region Configuração do Swagger
+            #region configuração dO Swagger 
             services.AddSwaggerGen(s =>
             {
                 new OpenApiInfo
@@ -46,26 +45,10 @@ namespace APIApresention
                         Email = "Rhfuncionario@gmail.com.br"
                     }
 
-
                 };
             });
             #endregion
-
-            #region Inicializando os repositórios
-            //ler a connectionstring mapeada no arquivo [appsettings.json]..
-            var connectionstring = Configuration.GetConnectionString("APICadastroAutenticacao");
-            //inicializando as classes do repositorio, passando para elas
-            //o endereço da connectionstring do banco de dados..
-
-             services.AddTransient
-            (map => new UsuarioRepository(connectionstring));
-
-
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-            #endregion
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -74,17 +57,14 @@ namespace APIApresention
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseRouting();
 
             app.UseAuthorization();
-
-            #region Configuração do Swagger
+            #region configuração do Swagger
 
             app.UseSwagger();
-
-            app.UseSwaggerUI(s => s.SwaggerEndpoint
-           ("/swagger/v1/swagger.json", "projeto"));
-
+            app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "projeto"));
             #endregion
 
             app.UseEndpoints(endpoints =>
@@ -93,6 +73,5 @@ namespace APIApresention
             });
         }
     }
-
-} 
+}
 

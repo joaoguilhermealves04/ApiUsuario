@@ -1,4 +1,4 @@
-﻿using APIDamain.Entities;
+﻿using APIDomain.Entities;
 using APIRepository.Contracts;
 using Dapper;
 using System;
@@ -16,10 +16,12 @@ namespace APIRepository.Repositories
         #region ConnectionString 
         private string connectionstring;
 
-        public UsuarioRepository(string connectionstring)
+        public UsuarioRepository()
         {
-            this.connectionstring = connectionstring;
+            connectionstring = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=APICadastroAutenticação;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         }
+
+        
 
         #endregion
 
@@ -46,7 +48,7 @@ namespace APIRepository.Repositories
 
         public void Inserir(Usuario usuario)
         {
-            var query = "Insert into CadastroUsuario(Id,Nome,Email,Senhar,DataCadastro)valeus(@Id,@Nome,@Email,@Senhar,@DataCadastro)";
+            var query = "Insert into CadastroUsuario (Id,Nome,Email,Senhar,DataCadastro,DataAltercao)values(@Id,@Nome,@Email,@Senhar,@DataCadastro,@DataAlteracao)";
 
             using (var connection = new SqlConnection(connectionstring))
             {
